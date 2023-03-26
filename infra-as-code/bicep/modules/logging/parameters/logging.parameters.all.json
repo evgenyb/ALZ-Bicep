@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLogAnalyticsWorkspaceName": {
-      "value": "alz-log-analytics"
+      "value": "iac-log-analytics"
     },
     "parLogAnalyticsWorkspaceLocation": {
-      "value": "eastus"
+      "value": "norwayeast"
     },
     "parLogAnalyticsWorkspaceSkuName": {
       "value": "PerGB2018"
@@ -30,10 +30,10 @@
       ]
     },
     "parAutomationAccountName": {
-      "value": "alz-automation-account"
+      "value": "iac-automation-account"
     },
     "parAutomationAccountLocation": {
-      "value": "eastus2"
+      "value": "norwayeast"
     },
     "parAutomationAccountUseManagedIdentity": {
       "value": true

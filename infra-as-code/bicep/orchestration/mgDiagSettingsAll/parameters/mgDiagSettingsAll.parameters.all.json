@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parTopLevelManagementGroupPrefix": {
-      "value": "alz"
+      "value": "iac"
     },
     "parTopLevelManagementGroupSuffix": {
       "value": ""
@@ -15,7 +15,7 @@
       "value": false
     },
     "parLogAnalyticsWorkspaceResourceId": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/alz-logging/providers/microsoft.operationalinsights/workspaces/alz-log-analytics"
+      "value": "/subscriptions/5eac8bf7-f3e6-4f5b-9030-6aad1a62a0db/resourceGroups/iac-logging-rg/providers/Microsoft.OperationalInsights/workspaces/iac-log-analytics"
     },
     "parLandingZoneMgChildren": {
       "value": []

@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLocation": {
-      "value": "eastus"
+      "value": "norwayeast"
     },
     "parCompanyPrefix": {
-      "value": "alz"
+      "value": "iac"
     },
     "parAzFirewallTier": {
       "value": "Standard"
@@ -18,44 +18,35 @@
       "value": true
     },
     "parVirtualWanName": {
-      "value": "alz-vwan-eastus"
+      "value": "iac-vwan-norwayeast"
     },
     "parVirtualWanHubName": {
-      "value": "alz-vhub"
+      "value": "iac-vhub"
     },
     "parVpnGatewayName": {
-      "value": "alz-vpngw"
+      "value": ""
     },
     "parExpressRouteGatewayName": {
-      "value": "alz-ergw"
+      "value": ""
     },
     "parAzFirewallName": {
-      "value": "alz-fw"
+      "value": "iac-fw"
     },
     "parAzFirewallAvailabilityZones": {
       "value": []
     },
     "parAzFirewallPoliciesName": {
-      "value": "alz-azfwpolicy-eastus"
+      "value": "iac-azfwpolicy-norwayeast"
     },
     "parVirtualWanHubs": {
       "value": [
         {
-          "parVpnGatewayEnabled": true,
-          "parExpressRouteGatewayEnabled": true,
+          "parVpnGatewayEnabled": false,
+          "parExpressRouteGatewayEnabled": false,
           "parAzFirewallEnabled": true,
           "parVirtualHubAddressPrefix": "10.100.0.0/23",
-          "parHubLocation": "eastus",
-          "parHubRoutingPreference": "ExpressRoute",
-          "parVirtualRouterAutoScaleConfiguration": 2
-        },
-        {
-          "parVpnGatewayEnabled": true,
-          "parExpressRouteGatewayEnabled": true,
-          "parAzFirewallEnabled": true,
-          "parVirtualHubAddressPrefix": "10.110.0.0/23",
-          "parHubLocation": "westus",
-          "parHubRoutingPreference": "ExpressRoute",
+          "parHubLocation": "norwayeast",
+          "parHubRoutingPreference": "VpnGateway",
           "parVirtualRouterAutoScaleConfiguration": 2
         }
       ]
@@ -64,23 +55,23 @@
       "value": 1
     },
     "parExpressRouteGatewayScaleUnit": {
-      "value": 1
+      "value": 0
     },
     "parDdosEnabled": {
       "value": true
     },
     "parDdosPlanName": {
-      "value": "alz-ddos-plan"
+      "value": "iac-ddos-plan"
     },
     "parPrivateDnsZonesEnabled": {
       "value": true
     },
     "parPrivateDnsZones": {
       "value": [
-        "privatelink.xxxxxx.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus)
-        "privatelink.xxxxxx.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus, the geo code is eus)
+        "privatelink.norwayeast.azmk8s.io", // Replace xxxxxx with target region (i.e. eastus)
+        "privatelink.norwayeast.batch.azure.com", // Replace xxxxxx with target region (i.e. eastus)
+        "privatelink.norwayeast.kusto.windows.net", // Replace xxxxxx with target region (i.e. eastus)
+        "privatelink.norwayeast.backup.windowsazure.com", // Replace xxxxxx with target region geo code (i.e. for eastus, the geo code is eus)
         "privatelink.adf.azure.com",
         "privatelink.afs.azure.net",
         "privatelink.agentsvc.azure-automation.net",
@@ -147,7 +138,7 @@
       ]
     },
     "parVirtualNetworkIdToLink": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/alz-hub-eastus"
+      "value": "" // "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/HUB_Networking_POC/providers/Microsoft.Network/virtualNetworks/iac-hub-eastus"
     },
     "parTags": {
       "value": {

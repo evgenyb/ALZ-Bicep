@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "parLocation": {
-      "value": "westeurope"
+      "value": "norwayeast"
     },
     "parTopLevelManagementGroupPrefix": {
-      "value": "alz"
+      "value": "iac"
     },
     "parTopLevelManagementGroupSuffix": {
       "value": ""
@@ -15,7 +15,7 @@
       "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     "parPeeredVnetSubscriptionMgPlacement": {
-      "value": "alz-platform-connectivity"
+      "value": "iac-platform-connectivity"
     },
     "parDdosProtectionPlanId": {
       "value": ""
@@ -39,7 +39,7 @@
       "value": "rtb-spoke-to-hub"
     },
     "parHubVirtualNetworkId": {
-      "value": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/alz-westeurope-hub-networking/providers/Microsoft.Network/virtualHubs/alz-vhub-westeurope"
+      "value": "/subscriptions/107ca4ca-d368-4126-a86a-5fa4cd9d3d37/resourceGroups/iac-iac-vwan-001-rg/providers/Microsoft.Network/virtualHubs/iac-vhub-norwayeast"
     },
     "parAllowSpokeForwardedTraffic": {
       "value": false
