@@ -17,6 +17,7 @@ Artefacts like policies etc. are pulled down from the [`Azure/Enterprise-Scale` 
   * [Network Topology: Hub and Spoke][wiki_deployment_flow_hs]
   * [Network Topology: Virtual WAN][wiki_deployment_flow_vwan]
 * [Consumer Guide][wiki_consumer_guide]
+  * [Accelerator][accelerator]
 * [How Does ALZ-Bicep Implement Azure Policies?][wiki_policy_deep_dive]
   * [Adding Custom Azure Policy Definitions][wiki_policy_defs]
   * [Assigning Azure Policies][wiki_policy_assignments]
@@ -64,6 +65,7 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [wiki_deployment_flow_hs]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowHS "Wiki - Deployment Flow - Hub and Spoke"
 [wiki_deployment_flow_vwan]:                            https://github.com/Azure/ALZ-Bicep/wiki/DeploymentFlowVWAN "Wiki - Deployment Flow - Virtual WAN"
 [wiki_consumer_guide]:                          https://github.com/Azure/ALZ-Bicep/wiki/ConsumerGuide "Wiki - Consumer Guide"
+[wiki_accelerator]:                          https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Wiki - Consumer Guide - Accelerator"
 [wiki_policy_deep_dive]:                        https://github.com/Azure/ALZ-Bicep/wiki/PolicyDeepDive "Wiki - Policy Deep Dive"
 [wiki_policy_defs]:                        https://github.com/Azure/ALZ-Bicep/wiki/AddingPolicyDefs "Wiki - Policy Definitions"
 [wiki_policy_assignments]:                        https://github.com/Azure/ALZ-Bicep/wiki/AssigningPolicies "Wiki - Policy Assignments"
@@ -79,4 +81,5 @@ Replace `./` with `https://github.com/Azure/ALZ-Bicep/wiki/` when copying to her
 [aes_part_2]:                                   https://aka.ms/azenable/95 "Part 2 - Enabling platform services"
 [aes_part_3]:                                   https://aka.ms/azenable/96 "Part 3 - Enabling landing zones"
 [aac_article]:                                  https://learn.microsoft.com/azure/architecture/landing-zones/bicep/landing-zone-bicep "Azure Architecture Center - Azure landing zones - Bicep modules design considerations"
+[accelerator]:                                https://github.com/Azure/ALZ-Bicep/wiki/Accelerator "Accelerator"
 

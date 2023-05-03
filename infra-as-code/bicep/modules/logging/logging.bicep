@@ -45,7 +45,6 @@ param parLogAnalyticsWorkspaceSolutions array = [
   'ChangeTracking'
   'Security'
   'SecurityInsights'
-  'ServiceMap'
   'SQLAdvancedThreatProtection'
   'SQLVulnerabilityAssessment'
   'SQLAssessment'

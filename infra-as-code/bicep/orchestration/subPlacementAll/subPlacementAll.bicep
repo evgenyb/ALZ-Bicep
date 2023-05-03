@@ -24,6 +24,9 @@ param parPlatformManagementMgSubs array = []
 @sys.description('An array of Subscription IDs to place in the (Platform) Connectivity Management Group. Default: Empty Array')
 param parPlatformConnectivityMgSubs array = []
 
+@sys.description('Dictionary Object to allow additional or different child Management Groups of the Platform Management Group describing the Subscription IDs which each of them contain. Default: Empty Object')
+param parPlatformMgChildrenSubs object = {}
+
 @sys.description('An array of Subscription IDs to place in the (Platform) Identity Management Group. Default: Empty Array')
 param parPlatformIdentityMgSubs array = []
 
@@ -93,6 +96,7 @@ module modIntRootMgSubPlacement '../../modules/subscriptionPlacement/subscriptio
   params: {
     parTargetManagementGroupId: varMgIds.intRoot
     parSubscriptionIds: parIntRootMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -103,6 +107,7 @@ module modPlatformMgSubPlacement '../../modules/subscriptionPlacement/subscripti
   params: {
     parTargetManagementGroupId: varMgIds.platform
     parSubscriptionIds: parPlatformMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -112,6 +117,7 @@ module modPlatformManagementMgSubPlacement '../../modules/subscriptionPlacement/
   params: {
     parTargetManagementGroupId: varMgIds.platformManagement
     parSubscriptionIds: parPlatformManagementMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -121,6 +127,7 @@ module modplatformConnectivityMgSubPlacement '../../modules/subscriptionPlacemen
   params: {
     parTargetManagementGroupId: varMgIds.platformConnectivity
     parSubscriptionIds: parPlatformConnectivityMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -130,8 +137,20 @@ module modplatformIdentityMgSubPlacement '../../modules/subscriptionPlacement/su
   params: {
     parTargetManagementGroupId: varMgIds.platformIdentity
     parSubscriptionIds: parPlatformIdentityMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
+
+// Custom Children Platform Management Groups
+module modPlatformMgChildrenSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = [for mg in items(parPlatformMgChildrenSubs): if (!empty(parPlatformMgChildrenSubs)) {
+  name: take('modPlatformMgChildrenSubPlacement-${uniqueString(mg.key, string(length(mg.value.subscriptions)), deployment().name)}', 64)
+  scope: managementGroup('${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}')
+  params: {
+    parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-platform-${mg.key}${parTopLevelManagementGroupSuffix}'
+    parSubscriptionIds: mg.value.subscriptions
+    parTelemetryOptOut: parTelemetryOptOut
+  }
+}]
 
 // Landing Zone Management Groups
 module modLandingZonesMgSubPlacement '../../modules/subscriptionPlacement/subscriptionPlacement.bicep' = if (!empty(parLandingZonesMgSubs)) {
@@ -140,6 +159,7 @@ module modLandingZonesMgSubPlacement '../../modules/subscriptionPlacement/subscr
   params: {
     parTargetManagementGroupId: varMgIds.landingZones
     parSubscriptionIds: parLandingZonesMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -149,6 +169,7 @@ module modLandingZonesCorpMgSubPlacement '../../modules/subscriptionPlacement/su
   params: {
     parTargetManagementGroupId: varMgIds.landingZonesCorp
     parSubscriptionIds: parLandingZonesCorpMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -158,6 +179,7 @@ module modLandingZonesOnlineMgSubPlacement '../../modules/subscriptionPlacement/
   params: {
     parTargetManagementGroupId: varMgIds.landingZonesOnline
     parSubscriptionIds: parLandingZonesOnlineMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -168,6 +190,7 @@ module modLandingZonesConfidentialCorpMgSubPlacement '../../modules/subscription
   params: {
     parTargetManagementGroupId: varMgIds.landingZonesConfidentialCorp
     parSubscriptionIds: parLandingZonesConfidentialCorpMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -177,6 +200,7 @@ module modLandingZonesConfidentialOnlineMgSubPlacement '../../modules/subscripti
   params: {
     parTargetManagementGroupId: varMgIds.landingZonesConfidentialOnline
     parSubscriptionIds: parLandingZonesConfidentialOnlineMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -187,6 +211,7 @@ module modLandingZonesMgChildrenSubPlacement '../../modules/subscriptionPlacemen
   params: {
     parTargetManagementGroupId: '${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}${parTopLevelManagementGroupSuffix}'
     parSubscriptionIds: mg.value.subscriptions
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }]
 
@@ -197,6 +222,7 @@ module modDecommissionedMgSubPlacement '../../modules/subscriptionPlacement/subs
   params: {
     parTargetManagementGroupId: varMgIds.decommissioned
     parSubscriptionIds: parDecommissionedMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 
@@ -207,6 +233,7 @@ module modSandboxMgSubPlacement '../../modules/subscriptionPlacement/subscriptio
   params: {
     parTargetManagementGroupId: varMgIds.sandbox
     parSubscriptionIds: parSandboxMgSubs
+    parTelemetryOptOut: parTelemetryOptOut
   }
 }
 

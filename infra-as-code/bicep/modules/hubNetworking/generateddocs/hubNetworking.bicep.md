@@ -10,9 +10,11 @@ parLocation    | No       | The Azure Region to deploy the resources into.
 parCompanyPrefix | No       | Prefix value which will be prepended to all resource names.
 parHubNetworkName | No       | Prefix Used for Hub Network.
 parHubNetworkAddressPrefix | No       | The IP address range for all virtual networks to use.
-parSubnets     | No       | The name and IP address range for each subnet in the virtual networks.
+parSubnets     | No       | The name, IP address range, network security group and route table for each subnet in the virtual networks.
 parDnsServerIps | No       | Array of DNS Server IP addresses for VNet.
 parPublicIpSku | No       | Public IP Address SKU.
+parPublicIpPrefix | No       | Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
+parPublicIpSuffix | No       | Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
 parAzBastionEnabled | No       | Switch to enable/disable Azure Bastion deployment. Default: true
 parAzBastionName | No       | Name Associated with Bastion Service.
 parAzBastionSku | No       | Azure Bastion SKU or Tier to deploy.  Currently two options exist Basic and Standard.
@@ -74,9 +76,9 @@ The IP address range for all virtual networks to use.
 
 ![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
 
-The name and IP address range for each subnet in the virtual networks.
+The name, IP address range, network security group and route table for each subnet in the virtual networks.
 
-- Default value: `  `
+- Default value: `   `
 
 ### parDnsServerIps
 
@@ -93,6 +95,20 @@ Public IP Address SKU.
 - Default value: `Standard`
 
 - Allowed values: `Basic`, `Standard`
+
+### parPublicIpPrefix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Prefix for Public IPs. Include a succedent dash if required. Example: prefix-
+
+### parPublicIpSuffix
+
+![Parameter Setting](https://img.shields.io/badge/parameter-optional-green?style=flat-square)
+
+Optional Suffix for Public IPs. Include a preceding dash if required. Example: -suffix
+
+- Default value: `-PublicIP`
 
 ### parAzBastionEnabled
 
@@ -174,7 +190,7 @@ Azure Firewall Tier associated with the Firewall to deploy.
 
 - Default value: `Standard`
 
-- Allowed values: `Standard`, `Premium`
+- Allowed values: `Basic`, `Standard`, `Premium`
 
 ### parAzFirewallAvailabilityZones
 
@@ -257,7 +273,7 @@ Configuration for VPN virtual network gateway to be deployed. If a VPN virtual n
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-Vpn-Gateway', parameters('parCompanyPrefix'))]; gatewayType=Vpn; sku=VpnGw1; vpnType=RouteBased; generation=Generation1; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parExpressRouteGatewayConfig
 
@@ -268,7 +284,7 @@ Configuration for ExpressRoute virtual network gateway to be deployed. If a Expr
   "value": {}
 }
 
-- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; asn=65515; bgpPeeringAddress=; bgpsettings=}`
+- Default value: `@{name=[format('{0}-ExpressRoute-Gateway', parameters('parCompanyPrefix'))]; gatewayType=ExpressRoute; sku=ErGw1AZ; vpnType=RouteBased; vpnGatewayGeneration=None; enableBgp=False; activeActive=False; enableBgpRouteTranslationForNat=False; enableDnsForwarding=False; bgpPeeringAddress=; bgpsettings=}`
 
 ### parTags
 
@@ -299,6 +315,7 @@ Name | Type | Description
 outAzFirewallPrivateIp | string |
 outAzFirewallName | string |
 outPrivateDnsZones | array |
+outPrivateDnsZonesNames | array |
 outDdosPlanResourceId | string |
 outHubVirtualNetworkName | string |
 outHubVirtualNetworkId | string |
@@ -331,15 +348,27 @@ outHubVirtualNetworkId | string |
             "value": [
                 {
                     "name": "AzureBastionSubnet",
-                    "ipAddressRange": "10.10.15.0/24"
+                    "ipAddressRange": "10.10.15.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 },
                 {
                     "name": "GatewaySubnet",
-                    "ipAddressRange": "10.10.252.0/24"
+                    "ipAddressRange": "10.10.252.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 },
                 {
                     "name": "AzureFirewallSubnet",
-                    "ipAddressRange": "10.10.254.0/24"
+                    "ipAddressRange": "10.10.254.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
+                },
+                {
+                    "name": "AzureFirewallManagementSubnet",
+                    "ipAddressRange": "10.10.253.0/24",
+                    "networkSecurityGroupId": "",
+                    "routeTableId": ""
                 }
             ]
         },
@@ -348,6 +377,12 @@ outHubVirtualNetworkId | string |
         },
         "parPublicIpSku": {
             "value": "Standard"
+        },
+        "parPublicIpPrefix": {
+            "value": ""
+        },
+        "parPublicIpSuffix": {
+            "value": "-PublicIP"
         },
         "parAzBastionEnabled": {
             "value": true
@@ -484,7 +519,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": 65515,
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": 65515,
@@ -504,7 +538,6 @@ outHubVirtualNetworkId | string |
                 "activeActive": false,
                 "enableBgpRouteTranslationForNat": false,
                 "enableDnsForwarding": false,
-                "asn": "65515",
                 "bgpPeeringAddress": "",
                 "bgpsettings": {
                     "asn": "65515",
