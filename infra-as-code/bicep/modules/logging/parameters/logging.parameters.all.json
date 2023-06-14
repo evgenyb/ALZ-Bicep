@@ -28,6 +28,9 @@
         "VMInsights"
       ]
     },
+    "parLogAnalyticsWorkspaceLinkAutomationAccount": {
+      "value": true
+    },
     "parAutomationAccountName": {
       "value": "iac-automation-account"
     },
